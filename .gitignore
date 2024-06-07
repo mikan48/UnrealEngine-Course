@@ -78,4 +78,5 @@ Game/UEP/.vs/*
 Game/UEP/x64/*
 Game/UEP/Binaries/*
 Game/UEP/Intermediate/*
-
+Game/UEP/Crashes*
+Game/UEP/Logs*
