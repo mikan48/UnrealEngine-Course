@@ -74,8 +74,8 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 
 #directories
-.vs/*
-x64/*
-Binaries/*
-Intermediate/*
+Game/UEP/.vs/*
+Game/UEP/x64/*
+Game/UEP/Binaries/*
+Game/UEP/Intermediate/*
 
