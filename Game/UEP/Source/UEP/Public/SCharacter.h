@@ -5,12 +5,14 @@
 #include "CoreMinimal.h"
 #include "SInteractionComponent.h"
 #include "GameFramework/Character.h"
+#include <SAttributeComponent.h>
 #include "SCharacter.generated.h"
 
 class UCameraComponent;
 class USpringArmComponent;
 class InteractionComponent;
 class UAnimMontage;
+class USAttributeComponent;
 
 UCLASS()
 class UEP_API ASCharacter : public ACharacter
@@ -41,6 +43,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	USInteractionComponent* InteractionComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USAttributeComponent* AttributeComp;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

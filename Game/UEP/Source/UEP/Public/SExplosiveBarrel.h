@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "PhysicsEngine/RadialForceComponent.h"
-#include "Components/StaticMeshComponent.h"
 #include "SExplosiveBarrel.generated.h"
+
+class UStaticMeshComponent;
+class URadialForceComponent;
+
 
 UCLASS()
 class UEP_API ASExplosiveBarrel : public AActor
@@ -25,10 +27,13 @@ protected:
 	UStaticMeshComponent* StaticMeshComp;
 
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void PostInitializeComponents() override;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void OnActorHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 };
