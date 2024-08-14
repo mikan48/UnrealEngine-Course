@@ -80,3 +80,4 @@ Game/UEP/Binaries/*
 Game/UEP/Intermediate/*
 Game/UEP/Saved/Crashes*
 Game/UEP/Saved/Logs*
+Game/UEP/Saved/Config/CrashReportClient*
