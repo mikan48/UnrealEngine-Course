@@ -24,6 +24,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	TSubclassOf<AActor> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	TSubclassOf<AActor> BlackholeProjectile;
+
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	TSubclassOf<AActor> TeleportProjectile;
+
 	UPROPERTY(EditAnywhere, Category="Attack")
 	UAnimMontage* AttackAnim;
 
@@ -55,6 +61,9 @@ protected:
 	void PrimaryAttack();	
 	void PrimaryAttack_TimeElapsed();
 	void PrimaryInteract();
+	void BlackHole();
+	//void BlackHole_TimeElapsed();
+	void Teleport();
 
 public:	
 	// Called every frame

@@ -85,6 +85,39 @@ void ASCharacter::PrimaryInteract()
 	}
 }
 
+void ASCharacter::BlackHole()
+{
+	PlayAnimMontage(AttackAnim);
+
+	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+
+	FTransform SpawnTM = FTransform(GetControlRotation(), HandLocation);
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	SpawnParams.Instigator = this;
+
+	GetWorld()->SpawnActor<AActor>(BlackholeProjectile, SpawnTM, SpawnParams);
+}
+
+void ASCharacter::Teleport()
+{
+	PlayAnimMontage(AttackAnim);
+}
+
+//void ASCharacter::BlackHole_TimeElapsed()
+//{
+//	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+//
+//	FTransform SpawnTM = FTransform(GetControlRotation(), HandLocation);
+//
+//	FActorSpawnParameters SpawnParams;
+//	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+//	SpawnParams.Instigator = this;
+//
+//	GetWorld()->SpawnActor<AActor>(BlackholeProjectile, SpawnTM, SpawnParams);
+//}
+
 // Called every frame
 // This is entirely optional, it draws two arrows to visualize rotations of the player
 void ASCharacter::Tick(float DeltaTime)
@@ -125,5 +158,8 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 
 	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ASCharacter::PrimaryInteract);
+
+	PlayerInputComponent->BindAction("BlackHole", IE_Pressed, this, &ASCharacter::BlackHole);
+	PlayerInputComponent->BindAction("Teleport", IE_Pressed, this, &ASCharacter::Teleport);
 }
 
