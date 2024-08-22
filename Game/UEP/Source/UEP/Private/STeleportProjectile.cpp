@@ -3,30 +3,23 @@
 
 #include "STeleportProjectile.h"
 #include <GameFramework/Character.h>
+#include "GameFramework/ProjectileMovementComponent.h"
 
 ASTeleportProjectile::ASTeleportProjectile()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
-	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
-	RootComponent = SphereComp;
-
-	EffectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");
-	EffectComp->SetupAttachment(SphereComp);
-
-	MovementComp = CreateDefaultSubobject<UProjectileMovementComponent>("MovementComp");
-	MovementComp->InitialSpeed = 5000.0f;
-	MovementComp->bRotationFollowsVelocity = true;
-	MovementComp->bInitialVelocityInLocalSpace = true;
+	MovementComp->InitialSpeed = 6000.0f;
 }
 
 void ASTeleportProjectile::Teleport_TimeElapsed()
 {
+	//clear timer 
+	GetWorldTimerManager().ClearTimer(TimerHandle_TeleportAttack);
+
 	APawn* Player = AActor::GetInstigator();
 	FVector ProjectileVector = GetActorLocation();
 	FRotator ProjectileRotator = GetActorRotation();
 
+	//there is also Player->TeleportTo(...)
 	Player->SetActorLocationAndRotation(ProjectileVector, ProjectileRotator);
 
 	Destroy();
@@ -36,7 +29,7 @@ void ASTeleportProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetWorldTimerManager().SetTimer(TimerHandle_TeleportAttack, this, &ASTeleportProjectile::Teleport_TimeElapsed, 0.2f);
+	GetWorldTimerManager().SetTimer(TimerHandle_TeleportAttack, this, &ASTeleportProjectile::Teleport_TimeElapsed, TeleportDelay);
 }
 
 void ASTeleportProjectile::Tick(float DeltaTime)

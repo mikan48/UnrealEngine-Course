@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ProjectileBase.h"
+#include "SProjectileBase.h"
 #include "STeleportProjectile.generated.h"
 
 UCLASS()
-class UEP_API ASTeleportProjectile : public AProjectileBase
+class UEP_API ASTeleportProjectile : public ASProjectileBase
 {
 	GENERATED_BODY()
 
@@ -15,6 +15,9 @@ public:
 	ASTeleportProjectile();
 
 protected:
+
+	UPROPERTY(EditDefaultsOnly, Category = "Teleport")
+	float TeleportDelay = 0.2f;
 
 	FTimerHandle TimerHandle_TeleportAttack;
 
