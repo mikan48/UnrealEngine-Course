@@ -89,6 +89,27 @@ void ASCharacter::BlackHole()
 {
 	PlayAnimMontage(AttackAnim);
 
+	SpawnInHandForProjectiles(BlackholeProjectile);
+}
+
+void ASCharacter::Teleport()
+{
+	PlayAnimMontage(AttackAnim);
+
+	SpawnInHandForProjectiles(TeleportProjectile);
+
+	//GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ASCharacter::Teleport_TimeElapsed, 0.2f);
+}
+
+//void ASCharacter::Teleport_TimeElapsed()
+//{
+//	PlayAnimMontage(TeleportProjectileDestructionAnim);
+//
+//	AActor::Destroy();
+//}
+
+void ASCharacter::SpawnInHandForProjectiles(TSubclassOf<AActor> Projectile)
+{
 	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
 
 	FTransform SpawnTM = FTransform(GetControlRotation(), HandLocation);
@@ -97,12 +118,7 @@ void ASCharacter::BlackHole()
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	SpawnParams.Instigator = this;
 
-	GetWorld()->SpawnActor<AActor>(BlackholeProjectile, SpawnTM, SpawnParams);
-}
-
-void ASCharacter::Teleport()
-{
-	PlayAnimMontage(AttackAnim);
+	GetWorld()->SpawnActor<AActor>(Projectile, SpawnTM, SpawnParams);
 }
 
 //void ASCharacter::BlackHole_TimeElapsed()
@@ -156,7 +172,6 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASCharacter::PrimaryAttack);
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-
 	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ASCharacter::PrimaryInteract);
 
 	PlayerInputComponent->BindAction("BlackHole", IE_Pressed, this, &ASCharacter::BlackHole);

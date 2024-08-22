@@ -2,6 +2,7 @@
 
 
 #include "STeleportProjectile.h"
+#include <GameFramework/Character.h>
 
 ASTeleportProjectile::ASTeleportProjectile()
 {
@@ -15,14 +16,27 @@ ASTeleportProjectile::ASTeleportProjectile()
 	EffectComp->SetupAttachment(SphereComp);
 
 	MovementComp = CreateDefaultSubobject<UProjectileMovementComponent>("MovementComp");
-	MovementComp->InitialSpeed = 5.0f;
+	MovementComp->InitialSpeed = 5000.0f;
 	MovementComp->bRotationFollowsVelocity = true;
 	MovementComp->bInitialVelocityInLocalSpace = true;
+}
+
+void ASTeleportProjectile::Teleport_TimeElapsed()
+{
+	APawn* Player = AActor::GetInstigator();
+	FVector ProjectileVector = GetActorLocation();
+	FRotator ProjectileRotator = GetActorRotation();
+
+	Player->SetActorLocationAndRotation(ProjectileVector, ProjectileRotator);
+
+	Destroy();
 }
 
 void ASTeleportProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GetWorldTimerManager().SetTimer(TimerHandle_TeleportAttack, this, &ASTeleportProjectile::Teleport_TimeElapsed, 0.2f);
 }
 
 void ASTeleportProjectile::Tick(float DeltaTime)

@@ -6,9 +6,6 @@
 #include "ProjectileBase.h"
 #include "STeleportProjectile.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class UEP_API ASTeleportProjectile : public AProjectileBase
 {
@@ -18,6 +15,12 @@ public:
 	ASTeleportProjectile();
 
 protected:
+
+	FTimerHandle TimerHandle_TeleportAttack;
+
+	void Teleport_TimeElapsed();
+
+
 	virtual void BeginPlay() override;
 
 public:

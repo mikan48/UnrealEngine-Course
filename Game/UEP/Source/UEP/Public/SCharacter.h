@@ -64,6 +64,10 @@ protected:
 	void BlackHole();
 	//void BlackHole_TimeElapsed();
 	void Teleport();
+	void Teleport_TimeElapsed();
+
+private:
+	void SpawnInHandForProjectiles(TSubclassOf<AActor> Projectile);
 
 public:	
 	// Called every frame
