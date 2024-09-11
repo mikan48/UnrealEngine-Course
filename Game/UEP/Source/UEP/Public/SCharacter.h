@@ -33,6 +33,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Attack")
 	UAnimMontage* AttackAnim;
 
+	UPROPERTY(VisibleAnywhere)
+	FName HandSocketName;
+
 	FTimerHandle TimerHandle_PrimaryAttack;
 
 	UFUNCTION()

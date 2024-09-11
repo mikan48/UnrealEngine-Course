@@ -26,8 +26,16 @@ void ASHealingPotion::Tick(float DeltaTime)
 
 void ASHealingPotion::Interact_Implementation(APawn* InstigatorPawn)
 {
-	USAttributeComponent* AttributeComp = Cast<USAttributeComponent>(InstigatorPawn->GetComponentByClass(USAttributeComponent::StaticClass()));
-	AttributeComp->ApplyHealthChange(AmountOfHeal);
+	if (!ensure(InstigatorPawn))
+	{
+		return;
+	}
 
-	HidePowerUp();
+	USAttributeComponent* AttributeComp = Cast<USAttributeComponent>(InstigatorPawn->GetComponentByClass(USAttributeComponent::StaticClass()));
+	if (!AttributeComp->IsFulllHealth())
+	{
+		AttributeComp->ApplyHealthChange(AmountOfHeal);
+
+		HidePowerUp();
+	}
 }

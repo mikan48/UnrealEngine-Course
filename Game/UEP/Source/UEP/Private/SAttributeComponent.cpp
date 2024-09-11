@@ -24,4 +24,9 @@ bool USAttributeComponent::ApplyHealthChange(float Delta)
 	return true;
 }
 
+bool USAttributeComponent::IsFulllHealth() const
+{
+	return Health == MaxHealth;
+}
+
 
