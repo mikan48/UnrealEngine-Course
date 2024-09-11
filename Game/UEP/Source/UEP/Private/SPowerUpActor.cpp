@@ -13,14 +13,28 @@ ASPowerUpActor::ASPowerUpActor()
 	RespawnCooldown = 10.0f;
 }
 
+//void ASPowerUpActor::BeginPlay()
+//{
+//	Super::BeginPlay();
+//
+//	HidePowerUp();
+//}
+
 void ASPowerUpActor::Interact_Implementation(APawn* InstigatorPawn)
 {
 
 }
 
-void ASPowerUpActor::HidePowerUp()
+void ASPowerUpActor::ShowPowerUp()
 {
-	RootComponent->SetHiddenInGame(true);
+	RootComponent->SetVisibility(true, true);
 }
 
+void ASPowerUpActor::HidePowerUp()
+{
+	RootComponent->SetVisibility(false, true);
+
+	FTimerHandle TimerHandle_RespawnCooldown;
+	GetWorldTimerManager().SetTimer(TimerHandle_RespawnCooldown, this, &ASPowerUpActor::ShowPowerUp, RespawnCooldown);
+}
 

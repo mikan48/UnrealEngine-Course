@@ -2,18 +2,21 @@
 
 
 #include "SHealingPotion.h"
+#include <SAttributeComponent.h>
 
 ASHealingPotion::ASHealingPotion()
 {
 	BottleMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BottleMesh"));
 	BottleMesh->SetupAttachment(RootComponent);
 
-	GetWorldTimerManager().SetTimer(TimerHandle_RespawnCooldown, this, &ASHealingPotion::HidePowerUp, RespawnCooldown);
+	AmountOfHeal = 50;
 }
 
 void ASHealingPotion::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//HidePowerUp();
 }
 
 void ASHealingPotion::Tick(float DeltaTime)
@@ -23,14 +26,8 @@ void ASHealingPotion::Tick(float DeltaTime)
 
 void ASHealingPotion::Interact_Implementation(APawn* InstigatorPawn)
 {
-	
-}
+	USAttributeComponent* AttributeComp = Cast<USAttributeComponent>(InstigatorPawn->GetComponentByClass(USAttributeComponent::StaticClass()));
+	AttributeComp->ApplyHealthChange(AmountOfHeal);
 
-void ASHealingPotion::ShowPowerUp()
-{
-}
-
-void ASHealingPotion::HidePowerUp()
-{
-	RootComponent->SetHiddenInGame(true);
+	HidePowerUp();
 }

@@ -22,13 +22,13 @@ public:
 	// Sets default values for this actor's properties
 	ASPowerUpActor();
 
+	//virtual void BeginPlay() override;
+
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USphereComponent* SphereComp;
-
-	FTimerHandle TimerHandle_RespawnCooldown;
 
 	virtual void ShowPowerUp();
 	virtual void HidePowerUp();

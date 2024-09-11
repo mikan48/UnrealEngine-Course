@@ -18,6 +18,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BottleMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float AmountOfHeal;
+
 	virtual void BeginPlay() override;
 
 public:
@@ -28,6 +31,6 @@ public:
 
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 
-	virtual void ShowPowerUp() override;
-	virtual void HidePowerUp() override;
+	//virtual void ShowPowerUp() override;
+	//virtual void HidePowerUp() override;
 };
