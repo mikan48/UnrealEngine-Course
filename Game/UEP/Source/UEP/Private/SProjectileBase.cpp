@@ -5,6 +5,8 @@
 #include <Components/SphereComponent.h>
 #include <GameFramework/ProjectileMovementComponent.h>
 #include <Particles/ParticleSystemComponent.h>
+#include "Components/AudioComponent.h"
+#include "Sound/SoundCue.h"
 
 
 // Sets default values
@@ -18,6 +20,9 @@ ASProjectileBase::ASProjectileBase()
 
 	EffectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");
 	EffectComp->SetupAttachment(SphereComp);
+
+	AudioComp = CreateDefaultSubobject<UAudioComponent>("AudioComp");
+	AudioComp->SetupAttachment(RootComponent);
 
 	MovementComp = CreateDefaultSubobject<UProjectileMovementComponent>("MovementComp");
 	MovementComp->InitialSpeed = 5000.0f;

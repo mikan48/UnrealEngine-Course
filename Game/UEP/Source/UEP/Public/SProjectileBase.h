@@ -6,9 +6,12 @@
 #include "GameFramework/Actor.h"
 #include "SProjectileBase.generated.h"
 
+
 class USphereComponent;
 class UProjectileMovementComponent;
 class UParticleSystemComponent;
+class UAudioComponent;
+class USoundCue;
 
 UCLASS(ABSTRACT) // !!!!
 class UEP_API ASProjectileBase : public AActor
@@ -24,6 +27,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Effects")
 	UParticleSystem* ImpactVFX;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	USoundCue* ImpactSound;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USphereComponent* SphereComp;
 
@@ -32,5 +38,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UParticleSystemComponent* EffectComp;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UAudioComponent* AudioComp;
 
 };

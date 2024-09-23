@@ -8,6 +8,7 @@
 #include <SAttributeComponent.h>
 #include <AI/SAICharacter.h>
 #include "EngineUtils.h"
+#include "DrawDebugHelpers.h"
 
 
 ASGameModeBase::ASGameModeBase()
@@ -24,6 +25,33 @@ void ASGameModeBase::StartPlay()
 
 void ASGameModeBase::SpawnBotTimerElapsed()
 {
+	int32 NrOfAliveBots = 0;
+	for (TActorIterator<ASAICharacter> It(GetWorld()); It; ++It)
+	{
+		ASAICharacter* Bot = *It;
+
+		USAttributeComponent* AttributeComp = Cast<USAttributeComponent>(Bot->GetComponentByClass(USAttributeComponent::StaticClass()));
+		if (ensure(AttributeComp) && AttributeComp->IsAlive())
+		{
+			NrOfAliveBots++;
+		}
+	}
+
+	UE_LOG(LogTemp, Log, TEXT("Found %i alive bots."), NrOfAliveBots);
+
+	float MaxBotCount = 10.0f;
+
+	if (DifficultyCurve)
+	{
+		MaxBotCount = DifficultyCurve->GetFloatValue(GetWorld()->TimeSeconds);
+	}
+
+	if (NrOfAliveBots >= MaxBotCount)
+	{
+		UE_LOG(LogTemp, Log, TEXT("At maximum bot capacity. Skipping bot spawn."));
+		return;
+	}
+
 	UEnvQueryInstanceBlueprintWrapper* QueryInstance = UEnvQueryManager::RunEQSQuery(this, SpawnBotQuery, this, EEnvQueryRunMode::RandomBest5Pct, nullptr);
 	if (ensure(QueryInstance))
 	{
@@ -39,36 +67,14 @@ void ASGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryIn
 		return;
 	}
 
-	int32 NrOfAliveBots = 0;
-	for (TActorIterator<ASAICharacter> It(GetWorld()); It; ++It)
-	{
-		ASAICharacter* Bot = *It;
-
-		USAttributeComponent* AttributeComp = Cast<USAttributeComponent>(Bot->GetComponentByClass(USAttributeComponent::StaticClass()));
-		if (AttributeComp && AttributeComp->IsAlive())
-		{
-			NrOfAliveBots++;
-		}
-	}
-
-	float MaxBotCount = 10.0f;
-
-	if (DifficultyCurve)
-	{
-		MaxBotCount = DifficultyCurve->GetFloatValue(GetWorld()->TimeSeconds);
-	}
-
-	if (NrOfAliveBots >= MaxBotCount)
-	{
-		return;
-	}
-
-
-
 	TArray<FVector> Locations = QueryInstance->GetResultsAsLocations();
-
 	if (Locations.IsValidIndex(0))
 	{
+		Locations[0].Z = 90;
 		GetWorld()->SpawnActor<AActor>(MinionClass, Locations[0], FRotator::ZeroRotator);
+
+		// spawn locations
+		UE_LOG(LogTemp, Warning, TEXT("Spawn at %s"), *Locations[0].ToString());
+		DrawDebugSphere(GetWorld(), Locations[0], 50.0f, 20, FColor::Blue, false, 60.0f);
 	}
 }
