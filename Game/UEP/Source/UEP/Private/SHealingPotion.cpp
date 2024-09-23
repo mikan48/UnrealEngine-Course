@@ -34,7 +34,7 @@ void ASHealingPotion::Interact_Implementation(APawn* InstigatorPawn)
 	USAttributeComponent* AttributeComp = Cast<USAttributeComponent>(InstigatorPawn->GetComponentByClass(USAttributeComponent::StaticClass()));
 	if (!AttributeComp->IsFulllHealth())
 	{
-		AttributeComp->ApplyHealthChange(AmountOfHeal);
+		AttributeComp->ApplyHealthChange(this, AmountOfHeal);
 
 		HidePowerUp();
 	}
