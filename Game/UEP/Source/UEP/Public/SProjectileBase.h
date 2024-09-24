@@ -12,6 +12,7 @@ class UProjectileMovementComponent;
 class UParticleSystemComponent;
 class UAudioComponent;
 class USoundCue;
+class UCameraShake;
 
 UCLASS(ABSTRACT) // !!!!
 class UEP_API ASProjectileBase : public AActor
@@ -23,6 +24,15 @@ public:
 	ASProjectileBase();
 
 protected:
+
+	//UPROPERTY(EditDefaultsOnly, Category = "Effects|Shake")
+	//TSubclassOf<UCameraShake> ImpactShake;
+
+	//UPROPERTY(EditDefaultsOnly, Category = "Effects|Shake")
+	//float ImpactShakeInnerRadius;
+
+	//UPROPERTY(EditDefaultsOnly, Category = "Effects|Shake")
+	//float ImpactShakeOuterRadius;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Effects")
 	UParticleSystem* ImpactVFX;
@@ -41,5 +51,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UAudioComponent* AudioComp;
+
+	//UFUNCTION()
+	//virtual void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 };

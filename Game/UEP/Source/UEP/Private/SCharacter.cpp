@@ -6,6 +6,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "SInteractionComponent.h"
 #include "SAttributeComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -69,6 +70,8 @@ void ASCharacter::MoveRight(float value)
 
 void ASCharacter::PrimaryAttack()
 {
+	StartAttackEffects();
+
 	PlayAnimMontage(AttackAnim);
 
 	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ASCharacter::PrimaryAttack_TimeElapsed, 0.2f);
@@ -89,6 +92,11 @@ void ASCharacter::PrimaryInteract()
 
 void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta)
 {
+	if (Delta < 0.0f)
+	{
+		GetMesh()->SetScalarParameterValueOnMaterials(TimeToHitParamName, GetWorld()->TimeSeconds);
+	}
+
 	if (NewHealth <= 0.0f && Delta < 0.0f)
 	{
 		APlayerController* PC = Cast<APlayerController>(GetController());
@@ -98,6 +106,8 @@ void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent*
 
 void ASCharacter::BlackHole()
 {
+	StartAttackEffects();
+
 	PlayAnimMontage(AttackAnim);
 
 	SpawnInHandForProjectiles(BlackholeProjectile);
@@ -105,6 +115,8 @@ void ASCharacter::BlackHole()
 
 void ASCharacter::Teleport()
 {
+	StartAttackEffects();
+
 	PlayAnimMontage(AttackAnim);
 
 	SpawnInHandForProjectiles(TeleportProjectile);
@@ -118,6 +130,13 @@ void ASCharacter::Teleport()
 //
 //	AActor::Destroy();
 //}
+
+void ASCharacter::StartAttackEffects()
+{
+	PlayAnimMontage(AttackAnim);
+
+	UGameplayStatics::SpawnEmitterAttached(CastingEffect, GetMesh(), HandSocketName, FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::SnapToTarget);
+}
 
 void ASCharacter::SpawnInHandForProjectiles(TSubclassOf<AActor> Projectile)
 {

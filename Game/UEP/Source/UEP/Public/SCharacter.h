@@ -13,6 +13,7 @@ class USpringArmComponent;
 class InteractionComponent;
 class UAnimMontage;
 class USAttributeComponent;
+class UParticleSystem;
 
 UCLASS()
 class UEP_API ASCharacter : public ACharacter
@@ -32,6 +33,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Attack")
 	UAnimMontage* AttackAnim;
+
+	UPROPERTY(VisibleAnywhere, Category = "Effects")
+	FName TimeToHitParamName;
+
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	UParticleSystem* CastingEffect;
 
 	UPROPERTY(VisibleAnywhere)
 	FName HandSocketName;
@@ -72,6 +79,7 @@ protected:
 	//void BlackHole_TimeElapsed();
 	void Teleport();
 	void Teleport_TimeElapsed();
+	void StartAttackEffects();
 
 private:
 	void SpawnInHandForProjectiles(TSubclassOf<AActor> Projectile);
