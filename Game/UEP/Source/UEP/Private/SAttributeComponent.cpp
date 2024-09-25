@@ -12,6 +12,11 @@ USAttributeComponent::USAttributeComponent()
 	Health = MaxHealth;
 }
 
+bool USAttributeComponent::Kill(AActor* InstigatorActor)
+{
+	return ApplyHealthChange(InstigatorActor, -MaxHealth);
+}
+
 bool USAttributeComponent::IsAlive() const
 {
 	return Health > 0.0f;
@@ -24,6 +29,11 @@ bool USAttributeComponent::IsFulllHealth() const
 
 bool USAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Delta)
 {
+	if (!GetOwner()->CanBeDamaged())
+	{
+		return false;
+	}
+
 	float OldHealth = Health;
 
 	Health = FMath::Clamp(Health + Delta, 0, MaxHealth);
@@ -32,7 +42,7 @@ bool USAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Delt
 
 	OnHealthChanged.Broadcast(InstigatorActor, this, Health, Delta);
 
-	return ActualDelta != 0;
+	return !FMath::IsNearlyZero(ActualDelta);
 }
 
 bool USAttributeComponent::IsActorAlive(AActor* Actor)
