@@ -7,6 +7,7 @@
 #include "SInteractionComponent.h"
 #include "SAttributeComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Perception/PawnSensingComponent.h"
 
 
 // Sets default values
@@ -23,8 +24,8 @@ ASCharacter::ASCharacter()
 	CameraComp->SetupAttachment(SpringArmComponent);
 
 	InteractionComp = CreateDefaultSubobject<USInteractionComponent>("InteractionComp");
-
 	AttributeComp = CreateDefaultSubobject<USAttributeComponent>("AttributeComp");
+	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComp");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 

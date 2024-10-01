@@ -47,4 +47,6 @@ public:
 	bool ApplyHealthChange(AActor* InstigatorActor, float Delta);
 
 	bool IsFulllHealth() const;
+	float GetHealth() const;
+	float GetMaxHealth() const;
 };

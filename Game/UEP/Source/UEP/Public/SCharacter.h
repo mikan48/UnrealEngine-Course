@@ -14,6 +14,7 @@ class InteractionComponent;
 class UAnimMontage;
 class USAttributeComponent;
 class UParticleSystem;
+class UPawnSensingComponent;
 
 UCLASS()
 class UEP_API ASCharacter : public ACharacter
@@ -69,6 +70,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USAttributeComponent* AttributeComp;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPawnSensingComponent* PawnSensingComp;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
