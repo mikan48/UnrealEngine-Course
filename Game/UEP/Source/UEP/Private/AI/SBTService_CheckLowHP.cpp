@@ -25,7 +25,8 @@ void USBTService_CheckLowHP::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 
 			if (ensure(AttributeComp))
 			{
-				bool bIsLow = LowHealthMarker >= (AttributeComp->GetMaxHealth() / AttributeComp->GetHealth());
+				bool bIsLow = LowHealthMarker >= (AttributeComp->GetHealth() / AttributeComp->GetMaxHealth());
+				UE_LOG(LogTemp, Log, TEXT("IsLow: %s, MaxHealth: %f, Health: %f"), (bIsLow ? TEXT("true") : TEXT("false")), AttributeComp->GetMaxHealth(), AttributeComp->GetHealth());
 				BlackBoardComp->SetValueAsBool(IsLowKey.SelectedKeyName, bIsLow);
 			}
 		}

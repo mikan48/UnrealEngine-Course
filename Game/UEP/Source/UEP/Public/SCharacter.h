@@ -15,6 +15,7 @@ class UAnimMontage;
 class USAttributeComponent;
 class UParticleSystem;
 class UPawnSensingComponent;
+class USActionComponent;
 
 UCLASS()
 class UEP_API ASCharacter : public ACharacter
@@ -76,22 +77,20 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UPawnSensingComponent* PawnSensingComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USActionComponent* ActionComp;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	void MoveForward(float value);
 	void MoveRight(float value);
 	void PrimaryAttack();	
-	void PrimaryAttack_TimeElapsed();
 	void PrimaryInteract();
 	void BlackHole();
-	//void BlackHole_TimeElapsed();
 	void Teleport();
-	void Teleport_TimeElapsed();
-	void StartAttackEffects();
-
-private:
-	void SpawnInHandForProjectiles(TSubclassOf<AActor> Projectile);
+	void SprintStart();
+	void SprintStop();
 
 public:	
 	// Called every frame
