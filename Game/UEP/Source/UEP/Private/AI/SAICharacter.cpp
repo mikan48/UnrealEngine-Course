@@ -5,6 +5,7 @@
 #include "Perception/PawnSensingComponent.h"
 #include "AIController.h"
 #include "SAttributeComponent.h"
+#include "SActionComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BrainComponent.h"
 #include <SWorldUserWidget.h>
@@ -14,6 +15,8 @@
 ASAICharacter::ASAICharacter()
 {
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComp");
+
+	ActionComp = CreateDefaultSubobject<USActionComponent>("ActionComp");
 
 	AttributeComp = CreateDefaultSubobject<USAttributeComponent>("AttributeComp");
 

@@ -18,6 +18,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "PowerUp")
 	float RespawnCooldown;
 
+	UPROPERTY(EditAnywhere, Category = "PowerUp")
+	float CreditCost;
+
 
 	// Sets default values for this actor's properties
 	ASPowerUpActor();

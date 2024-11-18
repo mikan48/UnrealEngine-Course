@@ -3,6 +3,8 @@
 
 #include "SPowerUpActor.h"
 #include <Components/SphereComponent.h>
+#include <SAttributeComponent.h>
+#include <SPlayerState.h>
 
 // Sets default values
 ASPowerUpActor::ASPowerUpActor()

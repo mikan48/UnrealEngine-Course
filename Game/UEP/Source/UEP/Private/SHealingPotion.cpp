@@ -3,6 +3,7 @@
 
 #include "SHealingPotion.h"
 #include <SAttributeComponent.h>
+#include <SPlayerState.h>
 
 ASHealingPotion::ASHealingPotion()
 {
@@ -10,6 +11,8 @@ ASHealingPotion::ASHealingPotion()
 	BottleMesh->SetupAttachment(RootComponent);
 
 	AmountOfHeal = 50;
+
+	CreditCost = 50;
 }
 
 void ASHealingPotion::BeginPlay()
@@ -31,11 +34,15 @@ void ASHealingPotion::Interact_Implementation(APawn* InstigatorPawn)
 		return;
 	}
 
-	USAttributeComponent* AttributeComp = Cast<USAttributeComponent>(InstigatorPawn->GetComponentByClass(USAttributeComponent::StaticClass()));
-	if (!AttributeComp->IsFulllHealth())
+	USAttributeComponent* AttributeComp = USAttributeComponent::GetAttributes(InstigatorPawn);
+	if (ensure(AttributeComp) && !AttributeComp->IsFulllHealth())
 	{
-		AttributeComp->ApplyHealthChange(this, AmountOfHeal);
-
-		HidePowerUp();
+		if (ASPlayerState* PS = InstigatorPawn->GetPlayerState<ASPlayerState>())
+		{
+			if (PS->RemoveCredits(CreditCost) && AttributeComp->ApplyHealthChange(this, AttributeComp->GetMaxHealth()))
+			{
+				HidePowerUp();
+			}
+		}
 	}
 }
