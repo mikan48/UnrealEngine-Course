@@ -8,6 +8,7 @@
 #include <SGameplayFunctionLibrary.h>
 #include <SActionComponent.h>
 #include "GameFramework/ProjectileMovementComponent.h"
+#include <SActionEffect.h>
 
 // Sets default values
 ASMagicProjectile::ASMagicProjectile()
@@ -49,6 +50,11 @@ void ASMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent,
 		if (USGameplayFunctionLibrary::ApplyDirectionalDamage(GetInstigator(), OtherActor, Damage, SweepResult))
 		{
 			Destroy(); 
+
+			if (ActionComp)
+			{
+				ActionComp->AddAction(GetInstigator(), BurningActionClass);
+			}
 		}
 	}
 }

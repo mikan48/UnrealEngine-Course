@@ -9,6 +9,8 @@
 #include "GameplayTagContainer.h"
 #include "SMagicProjectile.generated.h"
 
+class USActionEffect;
+
 UCLASS()
 class UEP_API ASMagicProjectile : public AActor
 {
@@ -40,6 +42,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FGameplayTag ParryTag;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	TSubclassOf<USActionEffect> BurningActionClass;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
