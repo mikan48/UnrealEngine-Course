@@ -13,6 +13,8 @@ ASPowerUpActor::ASPowerUpActor()
 	RootComponent = SphereComp;
 
 	RespawnCooldown = 10.0f;
+
+	SetReplicates(true);
 }
 
 //void ASPowerUpActor::BeginPlay()

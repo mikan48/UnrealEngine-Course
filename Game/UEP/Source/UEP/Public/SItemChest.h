@@ -17,11 +17,20 @@ public:
 	float TargetPitch;
 
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
-	
+
+	void OnActorLoaded_Implementation();
+
 	// Sets default values for this actor's properties
 	ASItemChest();
 
 protected:
+
+	UPROPERTY(ReplicatedUsing = "OnRep_LidOpened", BlueprintReadOnly, SaveGame) // RepNotify
+	bool bLidOpened;
+
+	UFUNCTION()
+	void OnRep_LidOpened();
+
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMesh;
 
